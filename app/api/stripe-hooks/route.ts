@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
 
     const reqBuffer = Buffer.from(await req.arrayBuffer());
 
-    const data: { id: string; email: string } = await req.json();
 
     let event;
 
