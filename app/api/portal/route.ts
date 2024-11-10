@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import initStripe from 'stripe';
 import { supabaseRouteHandlerClient } from '@/utils/supabaseRouteHandlerClient';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     const supabase = supabaseRouteHandlerClient();
     const { data } = await supabase.auth.getUser();
     const user = data.user;

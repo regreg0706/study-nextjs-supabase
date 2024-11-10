@@ -3,8 +3,13 @@ import initStripe from "stripe";
 import { supabaseRouteHandlerClient } from "@/utils/supabaseRouteHandlerClient";
 
 export async function POST(req: NextRequest) {
-    const supabase = supabaseRouteHandlerClient();
-    const stripe = new initStripe(process.env.STRIPE_SECRET_KEY!);
+    const supabase = supabaseRouteHandlerClient(); 
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecretKey) {
+        throw new Error("STRIPE_SECRET_KEY is not defined");
+    }
+    const stripe = new initStripe(stripeSecretKey);
+    
     const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
     const signature = req.headers.get("stripe-signature");
 
