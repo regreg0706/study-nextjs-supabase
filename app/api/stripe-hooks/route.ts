@@ -72,7 +72,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({received: true});
     } catch (err: unknown) {
       
-      return NextResponse.json(`Webhook Error: ${err.message}`, {status: 401});
+      const error = err as Error;
+      return NextResponse.json(`Webhook Error: ${error.message}`, {status: 401});
     }
 
 
