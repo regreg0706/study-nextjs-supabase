@@ -3,7 +3,7 @@ import AuthClientButton from "./AuthClientButton";
 
 const AuthServerButton = async () => {
   const supabase = supabaseServer();
-  const { data: { user } } = await supabase.auth.getSession();
+  const { data: user } = await supabase.auth.getSession();
   const session = user.session;
 
   return (
