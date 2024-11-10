@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import initStripe from 'stripe';
 import { supabaseRouteHandlerClient } from '@/utils/supabaseRouteHandlerClient';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     const supabase = supabaseRouteHandlerClient();
     const { data } = await supabase.auth.getUser();
     const user = data.user;
@@ -16,6 +16,10 @@ export async function GET() {
     .select('stripe_customer')
     .eq('id', user?.id)
     .single();
+
+    if (!stripe_cutomer_data || !stripe_cutomer_data.stripe_customer) {
+        return NextResponse.json({error: 'Stripe customer not found'}, {status: 404});
+    }
 
     const stripe = new initStripe(process.env.STRIPE_SECRET_KEY!);
 
