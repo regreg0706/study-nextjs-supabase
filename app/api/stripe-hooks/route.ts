@@ -1,12 +1,9 @@
-import { init } from "next/dist/compiled/webpack/webpack";
 import { NextRequest, NextResponse } from "next/server";
 import initStripe from "stripe";
-import { cookies } from "next/headers";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { Database } from "@/lib/database.types";
+import { supabaseRouteHandlerClient } from "@/utils/supabaseRouteHandlerClient";
 
 export async function POST(req: NextRequest) {
-    const supabase = createRouteHandlerClient<Database>({cookies});
+    const supabase = supabaseRouteHandlerClient();
     const stripe = new initStripe(process.env.STRIPE_SECRET_KEY!);
     const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
     const signature = req.headers.get("stripe-signature");

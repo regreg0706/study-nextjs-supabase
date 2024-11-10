@@ -3,7 +3,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Button } from "../ui/button";
 
-const SubscriptionButton = ({planId}: {planId: String}) => {
+const SubscriptionButton = ({planId}: {planId: string}) => {
     const processSubscription = async () => {
        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/subscription/${planId}`);
 
