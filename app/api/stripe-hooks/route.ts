@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       }
 
       return NextResponse.json({received: true});
-    } catch (err: any) {
+    } catch (err: unknown) {
       
       return NextResponse.json(`Webhook Error: ${err.message}`, {status: 401});
     }
