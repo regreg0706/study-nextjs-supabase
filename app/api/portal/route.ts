@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import initStripe from 'stripe';
-import { supabaseRouteHandlerClient } from '@utils/supabaseRouteHandlerClient';
+import { supabaseRouteHandlerClient } from '@/utils/supabaseRouteHandlerClient';
 
 export async function GET(req: NextRequest) {
     const supabase = supabaseRouteHandlerClient();
