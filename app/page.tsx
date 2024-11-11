@@ -1,19 +1,19 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-// import Image from "next/image";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Database } from "@/lib/database.types";
+import { supabaseServer } from "@/utils/supabaseServer";
+import { SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-const supabase = createServerComponentClient<Database>({ cookies });
 
-const getAllLessions = async () => {
+
+const getAllLessions = async (supabase: SupabaseClient<Database>) => {
   const { data: lessons } = await supabase.from("lesson").select("*");
   return lessons;
 }
 
 export default async function Home() {
-  const lessons = await getAllLessions();
+  const supabase = supabaseServer();
+  const lessons = await getAllLessions(supabase);
 
   return (
       <main className="w-full max-w-3xl mx-auto my-16 px-2">
