@@ -1,13 +1,12 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { supabaseRouteHandlerClient } from '@/utils/supabaseRouteHandlerClient';
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import initStripe from 'stripe';
 
 export async function GET(
     req: NextRequest, 
     {params}: {params: {priceId: string}}
 ) {
-    const supabase = createRouteHandlerClient({cookies});
+    const supabase = supabaseRouteHandlerClient();
     const { data } = await supabase.auth.getUser();
     const user = data.user;
     if (!user) {
@@ -25,7 +24,7 @@ export async function GET(
 
     const stripe = new initStripe(process.env.STRIPE_SECRET_KEY!);
     const session = await stripe.checkout.sessions.create({
-        customer: stripe_cutomer_data?.stripe_customer,
+        customer: stripe_cutomer_data?.stripe_customer!,
         mode: 'subscription',
         payment_method_types: ['card'],
         line_items: [

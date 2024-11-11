@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import { createServerComponentClient, SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SupabaseClient } from "@supabase/auth-helpers-nextjs";
 import React from "react";
 import initStripe, { Stripe } from "stripe";
-import { cookies } from "next/headers";
 import { Database } from "@/lib/database.types";
 import SubscriptionButton from "@/components/checkout/SubscriptionButton";
 import AuthServerButton from "@/components/auth/AuthServerButton";
 import Link from "next/link";
+import { supabaseServer } from "@/utils/supabaseServer";
 
 interface Plan {
   id: string;
@@ -49,7 +49,7 @@ const getProfileData = async ( supabase: SupabaseClient<Database> ) => {
 }
 
 const PricingPage = async () => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = supabaseServer();
   const {data: user} = await supabase.auth.getSession();
 
   const [plans, profile] = await Promise.all([

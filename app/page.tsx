@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Database } from "@/lib/database.types";
 import { supabaseServer } from "@/utils/supabaseServer";
 import { SupabaseClient } from "@supabase/auth-helpers-nextjs";
-
-
+import { Database } from "@/lib/database.types";
 
 const getAllLessions = async (supabase: SupabaseClient<Database>) => {
   const { data: lessons } = await supabase.from("lesson").select("*");

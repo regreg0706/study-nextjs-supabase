@@ -1,8 +1,8 @@
-import { createServerComponentClient, SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SupabaseClient } from "@supabase/auth-helpers-nextjs";
 import React from "react";
 import { Database } from "@/lib/database.types";
-import { cookies } from "next/headers";
 import SubscriptionManagementButton from "@/components/checkout/SubscriptionManagementButton";
+import { supabaseServer } from "@/utils/supabaseServer";
 
 const getProfileData = async ( supabase: SupabaseClient<Database> ) => {
     const { data: profile } = await supabase
@@ -13,8 +13,8 @@ const getProfileData = async ( supabase: SupabaseClient<Database> ) => {
   }
 
 const Dashboard = async () => {
-    const supabase = createServerComponentClient({ cookies });
-    const profile = await getProfileData(supabase);
+  const supabase = supabaseServer();
+  const profile = await getProfileData(supabase);
 
   return (
     <div className="w-full max-w-3xl mx-auto py-16 px-8">
